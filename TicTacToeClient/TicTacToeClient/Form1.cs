@@ -89,18 +89,25 @@ namespace TicTacToeClient
                     incomingmessage = incomingmessage.Substring(4);
                     if (messagetype.Substring(0, 2) == ":0") //Message type name verification
                     {
-                        if (messagetype.Substring(2, 2) == "1:") { //Success
+                        if (messagetype.Substring(2, 2) == "1:")
+                        { //Success
                             btnNameSend.Enabled = false;
                             txtbxName.Enabled = false;
+
+                            txtbxchoice.Enabled = true;
+                            btnchoice.Enabled = true;
+
                             ClientRichTxtBox.AppendText("Welcome, " + incomingmessage + "!\n");
                         }
-                        else {
+                        else
+                        {
                             ClientRichTxtBox.AppendText("Username already taken!\n");
                         }
                     }
-                    else if(messagetype.Substring(0, 2) == ":3") //Disconnect 
+                    else if (messagetype.Substring(0, 2) == ":3") //Disconnect 
                     {
-                        if (messagetype.Substring(2,2) == "1:") { //Success
+                        if (messagetype.Substring(2, 2) == "1:")
+                        { //Success
                             connected = false;
                             terminating = true;
 
@@ -119,7 +126,8 @@ namespace TicTacToeClient
                             ClientRichTxtBox.AppendText("Disconnected from Server!\n");
 
                         }
-                        else { //Cannot Quit the game
+                        else
+                        { //Cannot Quit the game
                             ClientRichTxtBox.AppendText("Server doesn't allow discconnection!\n");
                         }
                     }
@@ -173,13 +181,36 @@ namespace TicTacToeClient
 
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 Byte[] namebuffer = Encoding.Default.GetBytes(":3:");
                 clientSocket.Send(namebuffer);
 
             }
+            catch
+            {
+                ClientRichTxtBox.AppendText("Cannot Send Disconnection Request!\n");
+            }
+        }
+
+        private void btnchoice_Click(object sender, EventArgs e)
+        {
+            try {
+                int nmbr;
+                if (Int32.TryParse(txtbxName.Text, out nmbr))
+                {
+                    if (nmbr >= 0 && nmbr <= 9)
+                    {
+                        Byte[] choicebuffer = Encoding.Default.GetBytes(":1:"+Convert.ToString(nmbr));
+                        clientSocket.Send(choicebuffer);
+                    }
+                }
+                else {
+                    ClientRichTxtBox.AppendText("Invalid Choice!\n");
+                }
+            }
             catch {
-                ClientRichTxtBox.AppendText("Cannot Send Disconnection Request!");
+                ClientRichTxtBox.AppendText("Cannot send the choice!\n");
             }
         }
     }

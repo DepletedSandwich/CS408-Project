@@ -157,6 +157,7 @@
             btnchoice.TabIndex = 11;
             btnchoice.Text = "Send";
             btnchoice.UseVisualStyleBackColor = true;
+            btnchoice.Click += btnchoice_Click;
             // 
             // btnNameSend
             // 
