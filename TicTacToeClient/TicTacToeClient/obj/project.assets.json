@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\aass4\\OneDrive\\Desktop\\CS408-TermProject-master\\source\\repos\\TicTacToeClient\\TicTacToeClient\\TicTacToeClient.csproj",
+      "projectUniqueName": "C:\\Users\\aass4\\OneDrive\\Desktop\\CS408-TermProject-master\\TicTacToeClient\\TicTacToeClient\\TicTacToeClient.csproj",
       "projectName": "TicTacToeClient",
-      "projectPath": "C:\\Users\\aass4\\OneDrive\\Desktop\\CS408-TermProject-master\\source\\repos\\TicTacToeClient\\TicTacToeClient\\TicTacToeClient.csproj",
+      "projectPath": "C:\\Users\\aass4\\OneDrive\\Desktop\\CS408-TermProject-master\\TicTacToeClient\\TicTacToeClient\\TicTacToeClient.csproj",
       "packagesPath": "C:\\Users\\aass4\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\aass4\\OneDrive\\Desktop\\CS408-TermProject-master\\source\\repos\\TicTacToeClient\\TicTacToeClient\\obj\\",
+      "outputPath": "C:\\Users\\aass4\\OneDrive\\Desktop\\CS408-TermProject-master\\TicTacToeClient\\TicTacToeClient\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

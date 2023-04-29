@@ -107,7 +107,7 @@
             btnconnect.Location = new Point(263, 25);
             btnconnect.Margin = new Padding(3, 4, 3, 4);
             btnconnect.Name = "btnconnect";
-            btnconnect.Size = new Size(106, 53);
+            btnconnect.Size = new Size(124, 53);
             btnconnect.TabIndex = 6;
             btnconnect.Text = "CONNECT";
             btnconnect.UseVisualStyleBackColor = true;
@@ -130,7 +130,7 @@
             btnDisconnect.Location = new Point(263, 87);
             btnDisconnect.Margin = new Padding(3, 4, 3, 4);
             btnDisconnect.Name = "btnDisconnect";
-            btnDisconnect.Size = new Size(106, 53);
+            btnDisconnect.Size = new Size(124, 53);
             btnDisconnect.TabIndex = 8;
             btnDisconnect.Text = "LEAVE";
             btnDisconnect.UseVisualStyleBackColor = true;

@@ -84,14 +84,19 @@ namespace TicTacToeClient
                     string incomingmessage = Encoding.Default.GetString(recieveBuffer);
                     incomingmessage = incomingmessage.Replace("\0", "");
 
-                    string messagetype = incomingmessage.Substring(0,3);
-                    incomingmessage = incomingmessage.Substring(3);
-                    if () { 
-                    
+                    string messagetype = incomingmessage.Substring(0, 4);
+                    incomingmessage = incomingmessage.Substring(4);
+                    if (messagetype.Substring(0,2) == ":0") //Message type name verification
+                    {
+                        if (messagetype.Substring(2,2) == "1:") { //Success
+                            btnNameSend.Enabled = false; 
+                            txtbxName.Enabled=false;
+                            ClientRichTxtBox.AppendText("Welcome, " + incomingmessage +"!\n");
+                        }
+                        else {
+                            ClientRichTxtBox.AppendText("Username already taken!\n");
+                        }
                     }
-
-
-                    ClientRichTxtBox.AppendText(incomingmessage);
                 }
                 catch
                 {
