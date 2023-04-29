@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace TicTacToeClient
 {
@@ -86,15 +87,40 @@ namespace TicTacToeClient
 
                     string messagetype = incomingmessage.Substring(0, 4);
                     incomingmessage = incomingmessage.Substring(4);
-                    if (messagetype.Substring(0,2) == ":0") //Message type name verification
+                    if (messagetype.Substring(0, 2) == ":0") //Message type name verification
                     {
-                        if (messagetype.Substring(2,2) == "1:") { //Success
-                            btnNameSend.Enabled = false; 
-                            txtbxName.Enabled=false;
-                            ClientRichTxtBox.AppendText("Welcome, " + incomingmessage +"!\n");
+                        if (messagetype.Substring(2, 2) == "1:") { //Success
+                            btnNameSend.Enabled = false;
+                            txtbxName.Enabled = false;
+                            ClientRichTxtBox.AppendText("Welcome, " + incomingmessage + "!\n");
                         }
                         else {
                             ClientRichTxtBox.AppendText("Username already taken!\n");
+                        }
+                    }
+                    else if(messagetype.Substring(0, 2) == ":3") //Disconnect 
+                    {
+                        if (messagetype.Substring(2,2) == "1:") { //Success
+                            connected = false;
+                            terminating = true;
+
+
+                            txtbxIP.Enabled = true;
+                            txtbxPort.Enabled = true;
+                            btnconnect.Enabled = true;
+
+                            btnconnect.BackColor = Control.DefaultBackColor;
+                            btnDisconnect.Enabled = false;
+                            btnNameSend.Enabled = false;
+                            txtbxName.Enabled = false; txtbxName.Clear();
+                            btnchoice.Enabled = false;
+                            txtbxchoice.Enabled = false; txtbxchoice.Clear();
+
+                            ClientRichTxtBox.AppendText("Disconnected from Server!\n");
+
+                        }
+                        else { //Cannot Quit the game
+                            ClientRichTxtBox.AppendText("Server doesn't allow discconnection!\n");
                         }
                     }
                 }
@@ -147,22 +173,14 @@ namespace TicTacToeClient
 
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
-            connected = false;
-            terminating = false;
+            try {
+                Byte[] namebuffer = Encoding.Default.GetBytes(":3:");
+                clientSocket.Send(namebuffer);
 
-
-            txtbxIP.Enabled = true;
-            txtbxPort.Enabled = true;
-            btnconnect.Enabled = true;
-
-            btnconnect.BackColor = Control.DefaultBackColor;
-            btnDisconnect.Enabled = false;
-            btnNameSend.Enabled = false;
-            txtbxName.Enabled = false;
-            btnchoice.Enabled = false;
-            txtbxchoice.Enabled = false;
-
-            ClientRichTxtBox.AppendText("Disconnected from Server!\n");
+            }
+            catch {
+                ClientRichTxtBox.AppendText("Cannot Send Disconnection Request!");
+            }
         }
     }
 }
