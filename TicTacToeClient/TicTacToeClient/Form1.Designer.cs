@@ -39,7 +39,6 @@
             btnDisconnect = new Button();
             label4 = new Label();
             btnchoice = new Button();
-            btnNameSend = new Button();
             txtbxchoice = new TextBox();
             SuspendLayout();
             // 
@@ -47,7 +46,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label1.Location = new Point(50, 257);
+            label1.Location = new Point(50, 131);
             label1.Name = "label1";
             label1.Size = new Size(79, 28);
             label1.TabIndex = 0;
@@ -67,7 +66,7 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label3.Location = new Point(86, 39);
+            label3.Location = new Point(88, 39);
             label3.Name = "label3";
             label3.Size = new Size(41, 28);
             label3.TabIndex = 2;
@@ -76,19 +75,19 @@
             // txtbxIP
             // 
             txtbxIP.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtbxIP.Location = new Point(119, 35);
+            txtbxIP.Location = new Point(132, 33);
             txtbxIP.Margin = new Padding(3, 4, 3, 4);
             txtbxIP.Name = "txtbxIP";
-            txtbxIP.Size = new Size(125, 34);
+            txtbxIP.Size = new Size(175, 34);
             txtbxIP.TabIndex = 3;
             // 
             // txtbxPort
             // 
             txtbxPort.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtbxPort.Location = new Point(119, 81);
+            txtbxPort.Location = new Point(132, 79);
             txtbxPort.Margin = new Padding(3, 4, 3, 4);
             txtbxPort.Name = "txtbxPort";
-            txtbxPort.Size = new Size(125, 34);
+            txtbxPort.Size = new Size(175, 34);
             txtbxPort.TabIndex = 4;
             // 
             // ClientRichTxtBox
@@ -104,7 +103,7 @@
             // btnconnect
             // 
             btnconnect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            btnconnect.Location = new Point(263, 25);
+            btnconnect.Location = new Point(313, 45);
             btnconnect.Margin = new Padding(3, 4, 3, 4);
             btnconnect.Name = "btnconnect";
             btnconnect.Size = new Size(124, 53);
@@ -115,19 +114,18 @@
             // 
             // txtbxName
             // 
-            txtbxName.Enabled = false;
             txtbxName.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtbxName.Location = new Point(130, 253);
+            txtbxName.Location = new Point(132, 128);
             txtbxName.Margin = new Padding(3, 4, 3, 4);
             txtbxName.Name = "txtbxName";
-            txtbxName.Size = new Size(125, 34);
+            txtbxName.Size = new Size(175, 34);
             txtbxName.TabIndex = 7;
             // 
             // btnDisconnect
             // 
             btnDisconnect.Enabled = false;
             btnDisconnect.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            btnDisconnect.Location = new Point(263, 87);
+            btnDisconnect.Location = new Point(313, 106);
             btnDisconnect.Margin = new Padding(3, 4, 3, 4);
             btnDisconnect.Name = "btnDisconnect";
             btnDisconnect.Size = new Size(124, 53);
@@ -140,7 +138,7 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
-            label4.Location = new Point(113, 373);
+            label4.Location = new Point(107, 258);
             label4.Name = "label4";
             label4.Size = new Size(86, 28);
             label4.TabIndex = 9;
@@ -150,7 +148,7 @@
             // 
             btnchoice.Enabled = false;
             btnchoice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            btnchoice.Location = new Point(263, 360);
+            btnchoice.Location = new Point(257, 245);
             btnchoice.Margin = new Padding(3, 4, 3, 4);
             btnchoice.Name = "btnchoice";
             btnchoice.Size = new Size(106, 53);
@@ -159,24 +157,11 @@
             btnchoice.UseVisualStyleBackColor = true;
             btnchoice.Click += btnchoice_Click;
             // 
-            // btnNameSend
-            // 
-            btnNameSend.Enabled = false;
-            btnNameSend.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            btnNameSend.Location = new Point(263, 244);
-            btnNameSend.Margin = new Padding(3, 4, 3, 4);
-            btnNameSend.Name = "btnNameSend";
-            btnNameSend.Size = new Size(106, 53);
-            btnNameSend.TabIndex = 12;
-            btnNameSend.Text = "Send";
-            btnNameSend.UseVisualStyleBackColor = true;
-            btnNameSend.Click += btnNameSend_Click;
-            // 
             // txtbxchoice
             // 
             txtbxchoice.Enabled = false;
             txtbxchoice.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point);
-            txtbxchoice.Location = new Point(200, 369);
+            txtbxchoice.Location = new Point(194, 254);
             txtbxchoice.Margin = new Padding(3, 4, 3, 4);
             txtbxchoice.Name = "txtbxchoice";
             txtbxchoice.Size = new Size(55, 34);
@@ -188,7 +173,6 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(960, 644);
             Controls.Add(txtbxchoice);
-            Controls.Add(btnNameSend);
             Controls.Add(btnchoice);
             Controls.Add(label4);
             Controls.Add(btnDisconnect);
@@ -220,7 +204,6 @@
         private Button btnDisconnect;
         private Label label4;
         private Button btnchoice;
-        private Button btnNameSend;
         private TextBox txtbxchoice;
     }
 }

@@ -46,20 +46,34 @@ namespace TicTacToeClient
             {
                 try
                 {
+                    Byte[] name_buffer = Encoding.Default.GetBytes(txtbxName.Text);
+                    Byte[] port_buffer = new byte[4096];
                     clientSocket.Connect(IP, portNum);
 
-                    txtbxIP.Enabled = false;
-                    txtbxPort.Enabled = false;
-                    btnconnect.Enabled = false;
-                    btnconnect.BackColor = Color.Green;
-                    btnDisconnect.Enabled = true;
-                    btnNameSend.Enabled = true;
-                    txtbxName.Enabled = true;
+                    clientSocket.Send(name_buffer);
 
-                    ClientRichTxtBox.AppendText("Connected to the server!\n");
-                    connected = true;
-                    Thread recieveClientThread = new Thread(() => RecieveFromServer());
-                    recieveClientThread.Start();
+                    clientSocket.Receive(port_buffer);
+                    string callback = Encoding.Default.GetString(port_buffer);
+                    callback = callback.Replace("\0", "");
+                    if (callback == ":01:")
+                    { //Connection Accepted 
+                        txtbxIP.Enabled = false;
+                        txtbxPort.Enabled = false;
+                        btnconnect.Enabled = false;
+                        btnconnect.BackColor = Color.Green;
+                        btnDisconnect.Enabled = true;
+                        txtbxName.Enabled = false;
+
+                        ClientRichTxtBox.AppendText("Connected to the server!\n");
+                        connected = true;
+                        Thread recieveClientThread = new Thread(() => RecieveFromServer());
+                        recieveClientThread.Start();
+                    }
+                    else //Connection Denied
+                    {
+                        ClientRichTxtBox.AppendText("Username already taken!");
+
+                    }
                 }
                 catch
                 {
@@ -91,7 +105,6 @@ namespace TicTacToeClient
                     {
                         if (messagetype.Substring(2, 2) == "1:")
                         { //Success
-                            btnNameSend.Enabled = false;
                             txtbxName.Enabled = false;
 
                             txtbxchoice.Enabled = true;
@@ -103,6 +116,11 @@ namespace TicTacToeClient
                         {
                             ClientRichTxtBox.AppendText("Username already taken!\n");
                         }
+                    }
+                    else if (messagetype.Substring(0, 4) == ":11:")
+                    { //Recieve Board
+                        ClientRichTxtBox.AppendText(incomingmessage + "\n");
+
                     }
                     else if (messagetype.Substring(0, 2) == ":3") //Disconnect 
                     {
@@ -118,7 +136,6 @@ namespace TicTacToeClient
 
                             btnconnect.BackColor = Control.DefaultBackColor;
                             btnDisconnect.Enabled = false;
-                            btnNameSend.Enabled = false;
                             txtbxName.Enabled = false; txtbxName.Clear();
                             btnchoice.Enabled = false;
                             txtbxchoice.Enabled = false; txtbxchoice.Clear();
@@ -145,7 +162,6 @@ namespace TicTacToeClient
 
                         btnconnect.BackColor = Control.DefaultBackColor;
                         btnDisconnect.Enabled = false;
-                        btnNameSend.Enabled = false;
                         txtbxName.Enabled = false;
                         btnchoice.Enabled = false;
                         txtbxchoice.Enabled = false;
@@ -156,36 +172,12 @@ namespace TicTacToeClient
             }
         }
 
-        private void btnNameSend_Click(object sender, EventArgs e)
-        {
-            string username = ":0:" + txtbxName.Text;
-            try
-            {
-                if (username != "" && username.Length <= 64)
-                {
-                    Byte[] namebuffer = Encoding.Default.GetBytes(username);
-                    clientSocket.Send(namebuffer);
-                }
-                else
-                {
-                    ClientRichTxtBox.AppendText("Username violation of client! Cannot be empty nor longer than 64 characters.\n");
-                }
-            }
-            catch
-            {
-                ClientRichTxtBox.AppendText("Cannot Connect to Server!\n");
-
-            }
-
-        }
-
         private void btnDisconnect_Click(object sender, EventArgs e)
         {
             try
             {
                 Byte[] namebuffer = Encoding.Default.GetBytes(":3:");
                 clientSocket.Send(namebuffer);
-
             }
             catch
             {
@@ -195,21 +187,24 @@ namespace TicTacToeClient
 
         private void btnchoice_Click(object sender, EventArgs e)
         {
-            try {
+            try
+            {
                 int nmbr;
-                if (Int32.TryParse(txtbxName.Text, out nmbr))
+                if (Int32.TryParse(txtbxchoice.Text, out nmbr))
                 {
                     if (nmbr >= 0 && nmbr <= 9)
                     {
-                        Byte[] choicebuffer = Encoding.Default.GetBytes(":1:"+Convert.ToString(nmbr));
+                        Byte[] choicebuffer = Encoding.Default.GetBytes(":1:" + Convert.ToString(nmbr));
                         clientSocket.Send(choicebuffer);
                     }
                 }
-                else {
+                else
+                {
                     ClientRichTxtBox.AppendText("Invalid Choice!\n");
                 }
             }
-            catch {
+            catch
+            {
                 ClientRichTxtBox.AppendText("Cannot send the choice!\n");
             }
         }
