@@ -55,7 +55,7 @@ namespace TicTacToeClient
                     clientSocket.Receive(port_buffer);
                     string callback = Encoding.Default.GetString(port_buffer);
                     callback = callback.Replace("\0", "");
-                    if (callback == ":01:")
+                    if (callback.Substring(0,4) == ":01:")
                     { //Connection Accepted 
                         txtbxIP.Enabled = false;
                         txtbxPort.Enabled = false;
@@ -66,12 +66,13 @@ namespace TicTacToeClient
 
                         ClientRichTxtBox.AppendText("Connected to the server!\n");
                         connected = true;
+                        ClientRichTxtBox.AppendText("Welcome, "+callback.Substring(4)+"!\n");
                         Thread recieveClientThread = new Thread(() => RecieveFromServer());
                         recieveClientThread.Start();
                     }
                     else //Connection Denied
                     {
-                        ClientRichTxtBox.AppendText("Username already taken!");
+                        ClientRichTxtBox.AppendText("Username already taken!\n");
 
                     }
                 }
@@ -101,52 +102,34 @@ namespace TicTacToeClient
 
                     string messagetype = incomingmessage.Substring(0, 4);
                     incomingmessage = incomingmessage.Substring(4);
-                    if (messagetype.Substring(0, 2) == ":0") //Message type name verification
-                    {
-                        if (messagetype.Substring(2, 2) == "1:")
-                        { //Success
-                            txtbxName.Enabled = false;
-
-                            txtbxchoice.Enabled = true;
-                            btnchoice.Enabled = true;
-
-                            ClientRichTxtBox.AppendText("Welcome, " + incomingmessage + "!\n");
-                        }
-                        else
+                    if (messagetype.Substring(0,2) == ":3"){
+                        if (messagetype.Substring(2,4) == "1:") //Disconnect Success
                         {
-                            ClientRichTxtBox.AppendText("Username already taken!\n");
-                        }
-                    }
-                    else if (messagetype.Substring(0, 4) == ":11:")
-                    { //Recieve Board
-                        ClientRichTxtBox.AppendText(incomingmessage + "\n");
-
-                    }
-                    else if (messagetype.Substring(0, 2) == ":3") //Disconnect 
-                    {
-                        if (messagetype.Substring(2, 2) == "1:")
-                        { //Success
-                            connected = false;
-                            terminating = true;
-
-
                             txtbxIP.Enabled = true;
                             txtbxPort.Enabled = true;
                             btnconnect.Enabled = true;
+                            txtbxName.Enabled = true; txtbxName.Clear();
+
 
                             btnconnect.BackColor = Control.DefaultBackColor;
                             btnDisconnect.Enabled = false;
-                            txtbxName.Enabled = false; txtbxName.Clear();
-                            btnchoice.Enabled = false;
+                            btnchoice.Enabled = false; 
                             txtbxchoice.Enabled = false; txtbxchoice.Clear();
 
-                            ClientRichTxtBox.AppendText("Disconnected from Server!\n");
+                            connected = false;
+                            clientSocket.Close();
 
+                            ClientRichTxtBox.AppendText("Disconnected from the server!");
                         }
-                        else
-                        { //Cannot Quit the game
-                            ClientRichTxtBox.AppendText("Server doesn't allow discconnection!\n");
+                        else //Disconnect Fail
+                        {
+                            ClientRichTxtBox.AppendText("Disconnect Failure!");
                         }
+
+                    }
+                    else if(messagetype.Substring(0, 2) == ":1") //Choice Type
+                    { 
+                        /*WIP*/
                     }
                 }
                 catch
@@ -159,12 +142,12 @@ namespace TicTacToeClient
                         txtbxIP.Enabled = true;
                         txtbxPort.Enabled = true;
                         btnconnect.Enabled = true;
+                        txtbxName.Enabled = true; txtbxName.Clear();
 
                         btnconnect.BackColor = Control.DefaultBackColor;
                         btnDisconnect.Enabled = false;
-                        txtbxName.Enabled = false;
                         btnchoice.Enabled = false;
-                        txtbxchoice.Enabled = false;
+                        txtbxchoice.Enabled = false; txtbxchoice.Clear();
                     }
                     clientSocket.Close();
                     connected = false;
