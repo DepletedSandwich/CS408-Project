@@ -119,11 +119,15 @@ namespace TicTacToeClient
                             connected = false;
                             clientSocket.Close();
 
-                            ClientRichTxtBox.AppendText("Disconnected from the server!");
+                            ClientRichTxtBox.AppendText("Disconnected from the server!\n");
+                        }
+                        else if (messagetype.Substring(2, 4) == "2:")
+                        {
+                            ClientRichTxtBox.AppendText(incomingmessage+" has disconnected from the server!\n");
                         }
                         else //Disconnect Fail
                         {
-                            ClientRichTxtBox.AppendText("Disconnect Failure!");
+                            ClientRichTxtBox.AppendText("Disconnect Failure!\n");
                         }
 
                     }
